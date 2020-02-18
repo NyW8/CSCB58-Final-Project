@@ -1,0 +1,78 @@
+﻿CSCB58 Project Report: Winter 2020
+
+Team Member A
+-------------
+First Name: Artina
+Last Name: Sin
+Student Number:
+UofT E-mail Address:
+
+
+Team Member B
+-------------
+First Name: Wilson
+Last Name: Mak
+Student Number:
+UofT E-mail Address:
+
+Team Member C (Optional)
+-------------
+First Name: Jackson
+Last Name: Han
+Student Number: 1005412572
+UofT E-mail Address: jackson.han@mail.utoronto.ca
+
+Team Member D (Optional)
+-------------
+First Name: Nyah
+Last Name: Way
+Student Number: 1004808407
+UofT E-mail Address: n.way@mail.utoronto.ca
+
+
+Project Plan
+--------
+
+Project Title: 
+
+
+Provide a one paragraph description of your project:
+A Painting application where the user can use the DE2 board to draw multicolour freeform shapes, erase, draw simple shapes like squares and circles, and change the size of the drawing. We hope to also include keyboard input.
+
+What is your plan for the first week?
+We're going to make a plan for who is going to do which pieces and how they're going to fit together. We're planning on going over the project to sketch out modules and illustrate how everything will fit together. Then we want to make and test the smaller pieces so that we can rely on them to fit together.
+
+What is your plan for the second week?
+We're going to fit together the pieces we made and work on getting the base idea working with VGA inputs so that the user can use the keys to draw.
+
+What is your plan for the third week?
+For the third week, we hope to have expanded to more settings and worked out how to get drawing shapes, erasing and freeform working. We want to finish up the project and sort out any leftover difficulties.
+
+What is your backup plan if things don’t work out as planned?
+We can shorten our project to not include certain things like shapes or erasing, so that we can use the time from the third week to fix the base idea.
+
+
+Weekly Reports
+--------------
+<In this space, provide a report each week of what worked and what didn't, and what (if any) changes were made to your proposal)>
+
+
+[This is an example of a report where things didn't go so well.]
+Week 1: 
+	We added and tested the sensors and the main FSM. 
+	The distance sensor we had intended to use didn't work as expected (wasn't precise enough at further distances, only seems to work accurately within 5-10cm), so instead we've decided to change the project to use a light sensor instead.
+	Had trouble getting the FSM to work (kept getting stuck in state 101, took longer to debug than expected), so we may not be able to add the high score feature. We have updated that in the project description as an optional feature.
+
+
+
+References
+----------
+<In this space clearly indicate all external sources used in this project. If you used anyone else's code (from previous B58 projects or other sources) clearly indicate what you used and where you found it. Usage of any material not credited in this space will be considered plagiarism. It is absolutely OK and expected to update this section as you progress in the projected.>
+
+<Make sure to document what YOU added on top of the existing work, especially if you work with a previous project. What is it that YOU added?>
+
+
+Repo & Video
+------------
+<At the end of the project, provide links to your code repository and presentation video (and passwords if not public>
+
