@@ -1,9 +1,17 @@
-module controller ();
-
+module controller (Clock);
+    wire colour[2:0];
+    setColour(SW[17:14],Clock, )
 
 endmodule
 
-module setColour();
+module setColour(muxSelect, Clock, colour);
+    output reg colour;
+    always @ (posedge Clock)
+    begin
+        colour <= muxSelect
+        //case(muxSelect)
+        //    3'b000 : colour 
+    end
 
 endmodule
 
