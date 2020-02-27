@@ -12,8 +12,8 @@ Team Member B
 -------------
 First Name: Wilson
 Last Name: Mak
-Student Number:
-UofT E-mail Address:
+Student Number: 1004869403
+UofT E-mail Address: wilsonxie.mak@mail.utoronto.ca
 
 Team Member C (Optional)
 -------------
