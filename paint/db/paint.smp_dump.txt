@@ -1,0 +1,8 @@
+
+State Machine - |paint|control:c0|state
+Name state.SLOADY state.SWAITY state.SWAITX state.SLOADX state.SDRAW 
+state.SLOADX 0 0 0 0 0 
+state.SWAITX 0 0 1 1 0 
+state.SWAITY 0 1 0 1 0 
+state.SLOADY 1 0 0 1 0 
+state.SDRAW 0 0 0 1 1 

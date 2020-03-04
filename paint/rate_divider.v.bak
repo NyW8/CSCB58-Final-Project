@@ -1,0 +1,23 @@
+module rate_divider (CLOCK_50, RESET_N, ENABLE, DIVIDE);
+    input CLOCK_50;
+    input RESET_N;
+    input [27:0] DIVIDE;
+    output ENABLE;
+
+    reg [27:0] RateDivider;
+    reg [27:0] OldSpeed;
+
+    always @(posedge CLOCK_50)
+    begin
+        if (RESET_N == 1'b0 || RateDivider == 28'b0)    //If we reset or it's counted down, reset to val
+				RateDivider <= DIVIDE;
+        else if (DIVIDE != OldSpeed)                    //Parallel load new signal
+            begin
+                RateDivider <= DIVIDE;
+                OldSpeed <= DIVIDE;
+            end
+        else
+            RateDivider <= RateDivider - 28'b1;         //otherwise, just subtract from it
+	 end
+    assign ENABLE = (RateDivider == 28'b0) ? 1'b1 : 1'b0;
+endmodule

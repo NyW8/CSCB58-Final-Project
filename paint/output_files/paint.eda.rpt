@@ -1,6 +1,6 @@
 EDA Netlist Writer report for paint
-Tue Feb 25 19:44:37 2020
-Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
+Tue Mar  3 11:24:52 2020
+Quartus Prime Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
 
 
 ---------------------
@@ -17,27 +17,27 @@ Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 ----------------
 ; Legal Notice ;
 ----------------
-Copyright (C) 2016  Intel Corporation. All rights reserved.
+Copyright (C) 2019  Intel Corporation. All rights reserved.
 Your use of Intel Corporation's design tools, logic functions 
-and other software and tools, and its AMPP partner logic 
+and other software and tools, and any partner logic 
 functions, and any output files from any of the foregoing 
 (including device programming or simulation files), and any 
 associated documentation or information are expressly subject 
 to the terms and conditions of the Intel Program License 
 Subscription Agreement, the Intel Quartus Prime License Agreement,
-the Intel MegaCore Function License Agreement, or other 
-applicable license agreement, including, without limitation, 
-that your use is for the sole purpose of programming logic 
-devices manufactured by Intel and sold by Intel or its 
-authorized distributors.  Please refer to the applicable 
-agreement for further details.
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
 
 
 
 +-------------------------------------------------------------------+
 ; EDA Netlist Writer Summary                                        ;
 +---------------------------+---------------------------------------+
-; EDA Netlist Writer Status ; Successful - Tue Feb 25 19:44:37 2020 ;
+; EDA Netlist Writer Status ; Successful - Tue Mar  3 11:24:52 2020 ;
 ; Revision Name             ; paint                                 ;
 ; Top-level Entity Name     ; paint                                 ;
 ; Family                    ; Cyclone IV E                          ;
@@ -51,8 +51,7 @@ agreement for further details.
 ; Option                                                                                            ; Setting                   ;
 +---------------------------------------------------------------------------------------------------+---------------------------+
 ; Tool Name                                                                                         ; ModelSim-Altera (Verilog) ;
-; Generate functional simulation netlist                                                            ; Off                       ;
-; Time scale                                                                                        ; 1 ps                      ;
+; Generate functional simulation netlist                                                            ; On                        ;
 ; Truncate long hierarchy paths                                                                     ; Off                       ;
 ; Map illegal HDL characters                                                                        ; Off                       ;
 ; Flatten buses into individual nodes                                                               ; Off                       ;
@@ -67,20 +66,13 @@ agreement for further details.
 +---------------------------------------------------------------------------------------------------+---------------------------+
 
 
-+--------------------------------------------------------------------------------------------------------+
-; Simulation Generated Files                                                                             ;
-+--------------------------------------------------------------------------------------------------------+
-; Generated Files                                                                                        ;
-+--------------------------------------------------------------------------------------------------------+
-; /cmshome/waynyah/Desktop/CSCB58-Final-Project/paint/simulation/modelsim/paint_7_1200mv_85c_slow.vo     ;
-; /cmshome/waynyah/Desktop/CSCB58-Final-Project/paint/simulation/modelsim/paint_7_1200mv_0c_slow.vo      ;
-; /cmshome/waynyah/Desktop/CSCB58-Final-Project/paint/simulation/modelsim/paint_min_1200mv_0c_fast.vo    ;
-; /cmshome/waynyah/Desktop/CSCB58-Final-Project/paint/simulation/modelsim/paint.vo                       ;
-; /cmshome/waynyah/Desktop/CSCB58-Final-Project/paint/simulation/modelsim/paint_7_1200mv_85c_v_slow.sdo  ;
-; /cmshome/waynyah/Desktop/CSCB58-Final-Project/paint/simulation/modelsim/paint_7_1200mv_0c_v_slow.sdo   ;
-; /cmshome/waynyah/Desktop/CSCB58-Final-Project/paint/simulation/modelsim/paint_min_1200mv_0c_v_fast.sdo ;
-; /cmshome/waynyah/Desktop/CSCB58-Final-Project/paint/simulation/modelsim/paint_v.sdo                    ;
-+--------------------------------------------------------------------------------------------------------+
++----------------------------------------------------------------------------+
+; Simulation Generated Files                                                 ;
++----------------------------------------------------------------------------+
+; Generated Files                                                            ;
++----------------------------------------------------------------------------+
+; /home/nyah/Desktop/CSCB58-Final-Project/paint/simulation/modelsim/paint.vo ;
++----------------------------------------------------------------------------+
 
 
 +-----------------------------+
@@ -88,22 +80,15 @@ agreement for further details.
 +-----------------------------+
 Info: *******************************************************************
 Info: Running Quartus Prime EDA Netlist Writer
-    Info: Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
-    Info: Processing started: Tue Feb 25 19:44:36 2020
+    Info: Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
+    Info: Processing started: Tue Mar  3 11:24:52 2020
 Info: Command: quartus_eda --read_settings_files=off --write_settings_files=off paint -c paint
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (204019): Generated file paint_7_1200mv_85c_slow.vo in folder "/cmshome/waynyah/Desktop/CSCB58-Final-Project/paint/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file paint_7_1200mv_0c_slow.vo in folder "/cmshome/waynyah/Desktop/CSCB58-Final-Project/paint/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file paint_min_1200mv_0c_fast.vo in folder "/cmshome/waynyah/Desktop/CSCB58-Final-Project/paint/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file paint.vo in folder "/cmshome/waynyah/Desktop/CSCB58-Final-Project/paint/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file paint_7_1200mv_85c_v_slow.sdo in folder "/cmshome/waynyah/Desktop/CSCB58-Final-Project/paint/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file paint_7_1200mv_0c_v_slow.sdo in folder "/cmshome/waynyah/Desktop/CSCB58-Final-Project/paint/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file paint_min_1200mv_0c_v_fast.sdo in folder "/cmshome/waynyah/Desktop/CSCB58-Final-Project/paint/simulation/modelsim/" for EDA simulation tool
-Info (204019): Generated file paint_v.sdo in folder "/cmshome/waynyah/Desktop/CSCB58-Final-Project/paint/simulation/modelsim/" for EDA simulation tool
+Info (204019): Generated file paint.vo in folder "/home/nyah/Desktop/CSCB58-Final-Project/paint/simulation/modelsim/" for EDA simulation tool
 Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 1059 megabytes
-    Info: Processing ended: Tue Feb 25 19:44:37 2020
-    Info: Elapsed time: 00:00:01
+    Info: Peak virtual memory: 1068 megabytes
+    Info: Processing ended: Tue Mar  3 11:24:52 2020
+    Info: Elapsed time: 00:00:00
     Info: Total CPU time (on all processors): 00:00:01
 
 
