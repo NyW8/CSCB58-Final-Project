@@ -2,10 +2,10 @@
 
 Team Member A
 -------------
-First Name: Artina
+First Name: Iat Sam
 Last Name: Sin
-Student Number:
-UofT E-mail Address:
+Student Number:1004909904
+UofT E-mail Address:artina.sin@mail.utoronto.ca
 
 
 Team Member B
@@ -15,14 +15,14 @@ Last Name: Mak
 Student Number: 1004869403
 UofT E-mail Address: wilsonxie.mak@mail.utoronto.ca
 
-Team Member C (Optional)
+Team Member C
 -------------
 First Name: Jackson
 Last Name: Han
 Student Number: 1005412572
 UofT E-mail Address: jackson.han@mail.utoronto.ca
 
-Team Member D (Optional)
+Team Member D
 -------------
 First Name: Nyah
 Last Name: Way
