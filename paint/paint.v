@@ -17,8 +17,8 @@ module paint
 	);
 
 	input			CLOCK_50;				//	50 MHz
-	input   [17:0]   SW;
-	input   [3:0]   KEY;
+	input   [17:0]   SW;					// [2:0] size, [9:7] colour, 16 resetn
+	input   [3:0]   KEY;					// directions(3 == left, 2 == up, 1 == right, 0 == down)
 	output [17:0] LEDR;
 
 	// Declare your inputs and outputs here
@@ -75,7 +75,7 @@ module paint
 	//Testing movementControl:
 	//this current implementation works, feel free to copy/paste!
 	wire checkMovement, resetClock;
-	wire [8:0] cursorX, cursorY;
+	wire [7:0] cursorX, cursorY;
 	wire [3:0] directions;
 	assign directions = ~KEY[3:0];
 	rate_divider movement_divider(.clock(CLOCK_50),
@@ -94,6 +94,7 @@ module paint
 				.yloc(cursorY),
 				.clk(CLOCK_50),
 				.reset_N(resetn),
+				.size(SW[2:0]),
 				.inColour(SW[9:7]),
 				.loadX(loadX),
 				.loadY(loadY),
@@ -115,10 +116,11 @@ module paint
 			  );
 	
 endmodule
-
-module datapath(xloc, yloc, clk, reset_N, loadX, loadY, loadC, inColour, outX, outY, outColour);
+// added an input called size, if you need it for rectangle, you might want to modify it
+module datapath(xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadC, outX, outY, outColour);
 	input [8:0] xloc, yloc;
 	input clk, reset_N, loadX, loadY, loadC;
+	input [2:0] size;
 	input [2:0] inColour;
 	output [7:0] outX;
 	output [6:0] outY;
@@ -126,7 +128,9 @@ module datapath(xloc, yloc, clk, reset_N, loadX, loadY, loadC, inColour, outX, o
 
 	reg [7:0] x;
 	reg [6:0] y;
-	reg [3:0] count;	//2 bits each since we want a 2x2 square
+	//reg [3:0] count;	//2 bits each since we want a 2x2 square
+	reg [2:0] countX;	//size of square depends on size input, so requires separate count
+	reg [2:0] countY;
 	reg [2:0] colour;
 
 	always @(posedge clk)
@@ -136,7 +140,9 @@ module datapath(xloc, yloc, clk, reset_N, loadX, loadY, loadC, inColour, outX, o
 			x <= 8'b0;
 			y <= 7'b0;
 			colour <= 3'b0;
-			count <= 4'b0;
+			//count <= 4'b0;
+			countX <= size - 3'b1;	//if size = n, coordinates move at most n-1
+			countY <= size - 3'b1;
 		end
 		else 
 		begin
@@ -146,15 +152,29 @@ module datapath(xloc, yloc, clk, reset_N, loadX, loadY, loadC, inColour, outX, o
 				y <= yloc;
 			if (loadC)
 				colour <= inColour;
-			if (count == 4'b1111)
-				count <= 4'b0;
+			//if (count == 4'b1111)
+				//count <= 4'b0;
+			//else
+				//count <= count + 4'b1;
+			if (countX == 3'b0) 
+				begin
+					if (countY == 3'b0)
+						countY <= size - 3'b1;
+					else
+						countY <= countY - 3'b1;
+					countX <= size - 3'b1;
+				end
 			else
-				count <= count + 4'b1;
+				countX <= countX - 3'b1;
+
+				
 		end
 	end
 
-	assign outX = x + count[1:0];
-	assign outY = y + count[3:2];
+	//assign outX = x + count[1:0];
+	//assign outY = y + count[3:2];
+	assign outX = x + countX;
+	assign outY = y + countY;
 	assign outColour = colour;
 endmodule
 
