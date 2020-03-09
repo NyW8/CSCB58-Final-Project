@@ -68,7 +68,7 @@
 					"strict" : false
 				},
 				{
-					"name" : "LEDR[16]",
+					"name" : "LEDR[17]",
 					"strict" : false
 				},
 				{
@@ -225,6 +225,18 @@
 				},
 				{
 					"name" : "SW[16]",
+					"strict" : false
+				},
+				{
+					"name" : "SW[2]",
+					"strict" : false
+				},
+				{
+					"name" : "SW[1]",
+					"strict" : false
+				},
+				{
+					"name" : "SW[0]",
 					"strict" : false
 				},
 				{

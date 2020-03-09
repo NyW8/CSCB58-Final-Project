@@ -81,14 +81,16 @@ module paint
 	rate_divider movement_divider(.clock(CLOCK_50),
 								.resetN(resetn),
 								.enableOut(checkMovement),
-								.divide(28'd599_999));
+								.divide(28'd15_999_999));
 	movement_control movement(.inX(cursorX),
 									  .inY(cursorY),
 									  .directions(directions),
 									  .outX(cursorX),
 									  .outY(cursorY),
-									  .clock(checkMovement));									  
+									  .clock(checkMovement));
+									  
 	assign LEDR [16:0] = {cursorX, cursorY};	//cursorX in 16:9, cursorY in 8:0
+	assign LEDR[17] = ~cursorX[0];
 	
 	datapath d0(.xloc(cursorX),
 				.yloc(cursorY),
@@ -105,10 +107,14 @@ module paint
 				);
     // Instansiate FSM control
     // control c0(...);
+	 wire checkControl;
+	rate_divider movement_divider2(.clock(CLOCK_50),
+								.resetN(resetn),
+								.enableOut(checkControl),
+								.divide(28'd999_999));
    control c0(.start(SW[17]),
-			  //.haveX(!KEY[3]),
    		  .reset_N(resetn),
-			  .clk(CLOCK_50),
+			  .clk(checkControl),
 			  .loadX(loadX),
 			  .loadY(loadY),
 			  .loadC(loadC),
@@ -127,22 +133,22 @@ module datapath(xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadC, o
 	output [2:0] outColour;
 
 	reg [7:0] x;
-	reg [6:0] y;
+	reg [7:0] y;
+	reg [2:0] colour;
 	//reg [3:0] count;	//2 bits each since we want a 2x2 square
 	reg [2:0] countX;	//size of square depends on size input, so requires separate count
 	reg [2:0] countY;
-	reg [2:0] colour;
 
 	always @(posedge clk)
 	begin
 		if (reset_N == 1'b0)
 		begin
-			x <= 8'b0;
+			x <= 7'b0;
 			y <= 7'b0;
 			colour <= 3'b0;
 			//count <= 4'b0;
-			countX <= size - 3'b1;	//if size = n, coordinates move at most n-1
-			countY <= size - 3'b1;
+			countX <= size;	//if size = n, coordinates move at most n-1
+			countY <= size;
 		end
 		else 
 		begin
@@ -152,22 +158,20 @@ module datapath(xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadC, o
 				y <= yloc;
 			if (loadC)
 				colour <= inColour;
-			//if (count == 4'b1111)
-				//count <= 4'b0;
-			//else
-				//count <= count + 4'b1;
-			if (countX == 3'b0) 
+			/*if (count == 4'b1111)
+				count <= 4'b0;
+			else
+				count <= count + 4'b1;*/
+			if (countX == 3'b0) 		//size = 0 (biggest), 1 (gaps), 3 (gaps between bars), 6 (two verical bars),  
 				begin
 					if (countY == 3'b0)
-						countY <= size - 3'b1;
+						countY <= size;
 					else
 						countY <= countY - 3'b1;
-					countX <= size - 3'b1;
+					countX <= size;
 				end
 			else
 				countX <= countX - 3'b1;
-
-				
 		end
 	end
 
@@ -200,11 +204,9 @@ module control(start, reset_N, clk, loadX, loadY, loadC, enable);
 	always @(*)
 	begin
 		case (state)
-			SLOADX: next <= SWAITX;
-			SWAITX: next <= SLOADY;
-			SLOADY: next <= start ? SWAITY : SLOADY;
-			SWAITY: next <= start ? SWAITY : SDRAW;
-			SDRAW: next <= start ? SLOADX : SDRAW;
+			SLOADX: next <= SLOADY;
+			SLOADY: next <= start ? SDRAW : SLOADX;
+			SDRAW: next <= start ? SLOADX : SDRAW;	//Add a wait state
 		endcase 
 	end
 
@@ -216,9 +218,7 @@ module control(start, reset_N, clk, loadX, loadY, loadC, enable);
 		enable <= 1'b0;
 		case (state)
 			SLOADX: loadX <= 1'b1;
-			SWAITX: loadX <= 1'b1;
 			SLOADY: loadY <= 1'b1;
-			SWAITY: loadY <= 1'b1;
 			SDRAW: begin
 				loadX <= 1'b0;
 				loadY <= 1'b0;

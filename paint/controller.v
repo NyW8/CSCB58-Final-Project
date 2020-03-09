@@ -1,5 +1,5 @@
-module controller (Clock, SW);
-	input Clock;
+module controller (go, Clock, SW);
+	input Clock, go;
 	input [17:0] SW;
     wire colour[2:0];
     setColour(SW[17:14],Clock, colour[2]);
@@ -20,7 +20,8 @@ module controller (Clock, SW);
               DONTDRAW    = 5'd8;
            
   //condition should be when the 
-  always@(freeForm){
+  always@(freeForm)
+	begin
     case (current_state)
       WAIT    : next_state = go ? LOAD_X : WAIT;
       LOAD_X  : next_state = go ? LOAD_Y : LOAD_X;
@@ -31,11 +32,12 @@ module controller (Clock, SW);
       FREEDRAW : next_state = go ? WAIT : FREEDRAW;
     default : next_state = WAIT;
     endcase
-  }
+  end
   
-  always@(shape1){
+  always@(shape1)
+  begin
   
-  }
+  end
   
 
   
