@@ -40,38 +40,6 @@
 					"strict" : false
 				},
 				{
-					"name" : "LEDR[9]",
-					"strict" : false
-				},
-				{
-					"name" : "LEDR[10]",
-					"strict" : false
-				},
-				{
-					"name" : "LEDR[11]",
-					"strict" : false
-				},
-				{
-					"name" : "LEDR[12]",
-					"strict" : false
-				},
-				{
-					"name" : "LEDR[13]",
-					"strict" : false
-				},
-				{
-					"name" : "LEDR[14]",
-					"strict" : false
-				},
-				{
-					"name" : "LEDR[15]",
-					"strict" : false
-				},
-				{
-					"name" : "LEDR[17]",
-					"strict" : false
-				},
-				{
 					"name" : "VGA_HS",
 					"strict" : false
 				},
@@ -204,19 +172,11 @@
 					"strict" : false
 				},
 				{
-					"name" : "KEY[0]",
+					"name" : "SW[16]",
 					"strict" : false
 				},
 				{
-					"name" : "KEY[2]",
-					"strict" : false
-				},
-				{
-					"name" : "KEY[1]",
-					"strict" : false
-				},
-				{
-					"name" : "KEY[3]",
+					"name" : "SW[0]",
 					"strict" : false
 				},
 				{
@@ -224,7 +184,7 @@
 					"strict" : false
 				},
 				{
-					"name" : "SW[16]",
+					"name" : "SW[1]",
 					"strict" : false
 				},
 				{
@@ -232,11 +192,19 @@
 					"strict" : false
 				},
 				{
-					"name" : "SW[1]",
+					"name" : "KEY[2]",
 					"strict" : false
 				},
 				{
-					"name" : "SW[0]",
+					"name" : "KEY[0]",
+					"strict" : false
+				},
+				{
+					"name" : "KEY[3]",
+					"strict" : false
+				},
+				{
+					"name" : "KEY[1]",
 					"strict" : false
 				},
 				{

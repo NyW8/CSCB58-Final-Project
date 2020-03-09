@@ -1,51 +1,52 @@
-module drawSquare(	S_X,
+module drawSquare(S_X,
 					S_Y,
+					start,
 					X,
 					Y,
 					Out_X,
 					Out_Y,
 					Done,
-					clk
+					clk, LEDR
 					);
 
-	input clk;
-	input [4:0] S_X, S_Y, X, Y;
-	output reg [4:0] Out_X, Out_Y;
+	input clk, start;
+	input [3:0] S_X, S_Y;
+	input [7:0] X, Y;
+	output [7:0] Out_X, Out_Y;
 	output reg Done;
+	output [17:0] LEDR;
 	
-	reg [4:0] xCounter, yCounter;
-	
+	reg [3:0] xCounter, yCounter;
+	reg [5:0] counter;
+	assign LEDR [5:0] = counter;
+	assign LEDR [6] = Done;
+	assign LEDR [7] = start;
+	assign LEDR [8] = !start;
 	always@(posedge clk)
 	begin
-		if (Done) begin //resets out_x and out _y
-			Out_X <= 4'b0;
-			Out_Y <= 4'b0;
-		end 
-		else begin //Displace out_x and out_y by their respective counter amounts
-			Out_X <= X + xCounter; 
-			Out_Y <= Y + yCounter;
-		end
-		
-	end
-	
-	always@(posedge clk)
-	begin
-		if (Done) begin //resets counters
-			xCounter <= 4'b0;
-			yCounter <= 4'b0;
+		if (!start || Done)
+		begin //resets counters
+			xCounter <= S_X;
+			yCounter <= S_Y;
+			counter [5:3] <= S_X;
+			counter [2:0] <= S_Y;
+			if (start)
+				Done <= 1'b0;
 		end
 		else
-			if(yCounter != S_Y && xCounter != S_Y) begin //While block not filled
-				xCounter <= xCounter + 1'b1; //Increments xCounnter 
-			
-				if (xCounter == (S_X + 1'b1) && yCounter != S_Y)begin //Increments yCounter when xCounter is out of bounds, resets xCounter
-					xCounter <= 1'b0;
-					yCounter <= yCounter + 1'b1;
-					end
+			begin
+				if(yCounter == 3'b0) 
+				begin //While block not filled
+					if (xCounter == 3'b0)
+						Done <= 1'b1;
+					else 
+						xCounter <= xCounter - 3'b1;
+					yCounter <= S_Y;
+				end
+				else
+					yCounter <= yCounter - 3'b1;
 			end
-			else
-				Done <= 1'b1;
-				 
 	end	
-	
+	assign Out_X = X + xCounter;
+	assign Out_Y = Y + yCounter;
 endmodule 

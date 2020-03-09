@@ -1,5 +1,5 @@
 Analysis & Synthesis report for paint
-Mon Mar  9 11:09:19 2020
+Mon Mar  9 12:49:42 2020
 Quartus Prime Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
 
 
@@ -28,13 +28,14 @@ Quartus Prime Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
  20. altsyncram Parameter Settings by Entity Instance
  21. altpll Parameter Settings by Entity Instance
  22. Port Connectivity Checks: "rate_divider:movement_divider2"
- 23. Port Connectivity Checks: "datapath:d0"
- 24. Port Connectivity Checks: "rate_divider:movement_divider"
- 25. Port Connectivity Checks: "vga_adapter:VGA"
- 26. Post-Synthesis Netlist Statistics for Top Partition
- 27. Elapsed Time Per Partition
- 28. Analysis & Synthesis Messages
- 29. Analysis & Synthesis Suppressed Messages
+ 23. Port Connectivity Checks: "datapath:d0|drawSquare:sq"
+ 24. Port Connectivity Checks: "datapath:d0"
+ 25. Port Connectivity Checks: "rate_divider:movement_divider"
+ 26. Port Connectivity Checks: "vga_adapter:VGA"
+ 27. Post-Synthesis Netlist Statistics for Top Partition
+ 28. Elapsed Time Per Partition
+ 29. Analysis & Synthesis Messages
+ 30. Analysis & Synthesis Suppressed Messages
 
 
 
@@ -61,15 +62,15 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Mon Mar  9 11:09:19 2020       ;
+; Analysis & Synthesis Status        ; Successful - Mon Mar  9 12:49:42 2020       ;
 ; Quartus Prime Version              ; 19.1.0 Build 670 09/22/2019 SJ Lite Edition ;
 ; Revision Name                      ; paint                                       ;
 ; Top-level Entity Name              ; paint                                       ;
 ; Family                             ; Cyclone IV E                                ;
-; Total logic elements               ; 279                                         ;
-;     Total combinational functions  ; 272                                         ;
-;     Dedicated logic registers      ; 133                                         ;
-; Total registers                    ; 133                                         ;
+; Total logic elements               ; 275                                         ;
+;     Total combinational functions  ; 264                                         ;
+;     Dedicated logic registers      ; 125                                         ;
+; Total registers                    ; 125                                         ;
 ; Total pins                         ; 76                                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 230,400                                     ;
@@ -211,6 +212,7 @@ https://fpgasoftware.intel.com/eula.
 ; stratix_pll.inc                      ; yes             ; Megafunction                 ; /home/nyah/intelFPGA_lite/19.1/quartus/libraries/megafunctions/stratix_pll.inc       ;         ;
 ; stratixii_pll.inc                    ; yes             ; Megafunction                 ; /home/nyah/intelFPGA_lite/19.1/quartus/libraries/megafunctions/stratixii_pll.inc     ;         ;
 ; cycloneii_pll.inc                    ; yes             ; Megafunction                 ; /home/nyah/intelFPGA_lite/19.1/quartus/libraries/megafunctions/cycloneii_pll.inc     ;         ;
+; drawSquare.v                         ; yes             ; Auto-Found Verilog HDL File  ; /home/nyah/Desktop/CSCB58-Final-Project/paint/drawSquare.v                           ;         ;
 +--------------------------------------+-----------------+------------------------------+--------------------------------------------------------------------------------------+---------+
 
 
@@ -219,20 +221,20 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------+----------------+
 ; Resource                                    ; Usage          ;
 +---------------------------------------------+----------------+
-; Estimated Total logic elements              ; 279            ;
+; Estimated Total logic elements              ; 275            ;
 ;                                             ;                ;
-; Total combinational functions               ; 272            ;
+; Total combinational functions               ; 264            ;
 ; Logic element usage by number of LUT inputs ;                ;
-;     -- 4 input functions                    ; 87             ;
-;     -- 3 input functions                    ; 42             ;
-;     -- <=2 input functions                  ; 143            ;
+;     -- 4 input functions                    ; 92             ;
+;     -- 3 input functions                    ; 43             ;
+;     -- <=2 input functions                  ; 129            ;
 ;                                             ;                ;
 ; Logic elements by mode                      ;                ;
-;     -- normal mode                          ; 139            ;
-;     -- arithmetic mode                      ; 133            ;
+;     -- normal mode                          ; 132            ;
+;     -- arithmetic mode                      ; 132            ;
 ;                                             ;                ;
-; Total registers                             ; 133            ;
-;     -- Dedicated logic registers            ; 133            ;
+; Total registers                             ; 125            ;
+;     -- Dedicated logic registers            ; 125            ;
 ;     -- I/O registers                        ; 0              ;
 ;                                             ;                ;
 ; I/O pins                                    ; 76             ;
@@ -244,9 +246,9 @@ https://fpgasoftware.intel.com/eula.
 ;     -- PLLs                                 ; 1              ;
 ;                                             ;                ;
 ; Maximum fan-out node                        ; CLOCK_50~input ;
-; Maximum fan-out                             ; 111            ;
-; Total fan-out                               ; 2201           ;
-; Average fan-out                             ; 3.74           ;
+; Maximum fan-out                             ; 104            ;
+; Total fan-out                               ; 2158           ;
+; Average fan-out                             ; 3.77           ;
 +---------------------------------------------+----------------+
 
 
@@ -255,10 +257,11 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+-------------------------------------------------------------------------------------------------------+------------------------+--------------+
 ; Compilation Hierarchy Node                              ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                   ; Entity Name            ; Library Name ;
 +---------------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+-------------------------------------------------------------------------------------------------------+------------------------+--------------+
-; |paint                                                  ; 272 (1)             ; 133 (0)                   ; 230400      ; 0            ; 0       ; 0         ; 76   ; 0            ; |paint                                                                                                ; paint                  ; work         ;
+; |paint                                                  ; 264 (1)             ; 125 (0)                   ; 230400      ; 0            ; 0       ; 0         ; 76   ; 0            ; |paint                                                                                                ; paint                  ; work         ;
 ;    |control:c0|                                         ; 3 (3)               ; 3 (3)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |paint|control:c0                                                                                     ; control                ; work         ;
-;    |datapath:d0|                                        ; 46 (46)             ; 24 (24)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |paint|datapath:d0                                                                                    ; datapath               ; work         ;
-;    |movement_control:movement|                          ; 18 (18)             ; 16 (16)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |paint|movement_control:movement                                                                      ; movement_control       ; work         ;
+;    |datapath:d0|                                        ; 39 (5)              ; 17 (3)                    ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |paint|datapath:d0                                                                                    ; datapath               ; work         ;
+;       |drawSquare:sq|                                   ; 34 (34)             ; 14 (14)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |paint|datapath:d0|drawSquare:sq                                                                      ; drawSquare             ; work         ;
+;    |movement_control:movement|                          ; 17 (17)             ; 15 (15)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |paint|movement_control:movement                                                                      ; movement_control       ; work         ;
 ;    |rate_divider:movement_divider2|                     ; 38 (38)             ; 28 (28)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |paint|rate_divider:movement_divider2                                                                 ; rate_divider           ; work         ;
 ;    |rate_divider:movement_divider|                      ; 38 (38)             ; 28 (28)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |paint|rate_divider:movement_divider                                                                  ; rate_divider           ; work         ;
 ;    |vga_adapter:VGA|                                    ; 128 (0)             ; 34 (0)                    ; 230400      ; 0            ; 0       ; 0         ; 0    ; 0            ; |paint|vga_adapter:VGA                                                                                ; vga_adapter            ; work         ;
@@ -318,8 +321,9 @@ Encoding Type:  One-Hot
 ; rate_divider:movement_divider|OldSpeed[19]      ; Stuck at GND due to stuck port data_in ;
 ; rate_divider:movement_divider|OldSpeed[20..23]  ; Stuck at VCC due to stuck port data_in ;
 ; rate_divider:movement_divider|OldSpeed[24..27]  ; Stuck at GND due to stuck port data_in ;
-; datapath:d0|y[7]                                ; Lost fanout                            ;
-; Total Number of Removed Registers = 57          ;                                        ;
+; movement_control:movement|outY[7]               ; Lost fanout                            ;
+; datapath:d0|drawSquare:sq|xCounter[3]           ; Stuck at GND due to stuck port data_in ;
+; Total Number of Removed Registers = 58          ;                                        ;
 +-------------------------------------------------+----------------------------------------+
 
 
@@ -328,12 +332,12 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 133   ;
+; Total registers                              ; 125   ;
 ; Number of registers using Synchronous Clear  ; 1     ;
 ; Number of registers using Synchronous Load   ; 56    ;
 ; Number of registers using Asynchronous Clear ; 20    ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 37    ;
+; Number of registers using Clock Enable       ; 24    ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -343,11 +347,9 @@ Encoding Type:  One-Hot
 +--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                   ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------------------+
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |paint|datapath:d0|x[5]                                      ;
-; 3:1                ; 7 bits    ; 14 LEs        ; 7 LEs                ; 7 LEs                  ; Yes        ; |paint|datapath:d0|y[6]                                      ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |paint|vga_adapter:VGA|vga_controller:controller|yCounter[3] ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |paint|datapath:d0|drawSquare:sq|xCounter[0]                 ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |paint|vga_adapter:VGA|vga_controller:controller|yCounter[9] ;
 ; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |paint|datapath:d0|colour[2]                                 ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |paint|datapath:d0|countY[2]                                 ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |paint|control:c0|state                                      ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------------------+
 
@@ -903,13 +905,23 @@ Note: In order to hide this table in the UI and the text report file, please set
 
 
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "datapath:d0"                                                                                                                                ;
-+------+-------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
-; Port ; Type  ; Severity ; Details                                                                                                                                      ;
-+------+-------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
-; xloc ; Input ; Warning  ; Input port expression (8 bits) is smaller than the input port (9 bits) it drives.  Extra input bit(s) "xloc[8..8]" will be connected to GND. ;
-; yloc ; Input ; Warning  ; Input port expression (8 bits) is smaller than the input port (9 bits) it drives.  Extra input bit(s) "yloc[8..8]" will be connected to GND. ;
-+------+-------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "datapath:d0|drawSquare:sq"                                                                                                                  ;
++------+--------+----------+---------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                                                                                     ;
++------+--------+----------+---------------------------------------------------------------------------------------------------------------------------------------------+
+; S_X  ; Input  ; Warning  ; Input port expression (3 bits) is smaller than the input port (4 bits) it drives.  Extra input bit(s) "S_X[3..3]" will be connected to GND. ;
+; S_Y  ; Input  ; Warning  ; Input port expression (3 bits) is smaller than the input port (4 bits) it drives.  Extra input bit(s) "S_Y[3..3]" will be connected to GND. ;
+; Done ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed.                                                         ;
++------+--------+----------+---------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "datapath:d0"                                                                                                            ;
++------+--------+----------+-------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                                                                 ;
++------+--------+----------+-------------------------------------------------------------------------------------------------------------------------+
+; outY ; Output ; Warning  ; Output or bidir port (8 bits) is wider than the port expression (7 bits) it drives; bit(s) "outY[7..7]" have no fanouts ;
++------+--------+----------+-------------------------------------------------------------------------------------------------------------------------+
 
 
 +-----------------------------------------------------------+
@@ -944,27 +956,27 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
 ; boundary_port         ; 76                          ;
-; cycloneiii_ff         ; 133                         ;
+; cycloneiii_ff         ; 125                         ;
 ;     CLR               ; 20                          ;
-;     ENA               ; 37                          ;
+;     ENA               ; 24                          ;
 ;     SCLR              ; 1                           ;
 ;     SLD               ; 56                          ;
-;     plain             ; 19                          ;
-; cycloneiii_lcell_comb ; 274                         ;
-;     arith             ; 133                         ;
-;         2 data inputs ; 99                          ;
+;     plain             ; 24                          ;
+; cycloneiii_lcell_comb ; 266                         ;
+;     arith             ; 132                         ;
+;         2 data inputs ; 98                          ;
 ;         3 data inputs ; 34                          ;
-;     normal            ; 141                         ;
+;     normal            ; 134                         ;
 ;         0 data inputs ; 4                           ;
-;         1 data inputs ; 9                           ;
-;         2 data inputs ; 33                          ;
-;         3 data inputs ; 8                           ;
-;         4 data inputs ; 87                          ;
+;         1 data inputs ; 10                          ;
+;         2 data inputs ; 19                          ;
+;         3 data inputs ; 9                           ;
+;         4 data inputs ; 92                          ;
 ; cycloneiii_pll        ; 1                           ;
 ; cycloneiii_ram_block  ; 30                          ;
 ;                       ;                             ;
 ; Max LUT depth         ; 4.90                        ;
-; Average LUT depth     ; 3.00                        ;
+; Average LUT depth     ; 3.11                        ;
 +-----------------------+-----------------------------+
 
 
@@ -983,7 +995,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
-    Info: Processing started: Mon Mar  9 11:09:09 2020
+    Info: Processing started: Mon Mar  9 12:49:33 2020
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off paint -c paint
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
@@ -997,8 +1009,8 @@ Info (12021): Found 1 design units, including 1 entities, in source file vga_ada
     Info (12023): Found entity 1: vga_pll File: /home/nyah/Desktop/CSCB58-Final-Project/paint/vga_adapter/vga_pll.v Line: 36
 Info (12021): Found 3 design units, including 3 entities, in source file paint.v
     Info (12023): Found entity 1: paint File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 1
-    Info (12023): Found entity 2: datapath File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 126
-    Info (12023): Found entity 3: control File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 185
+    Info (12023): Found entity 2: datapath File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 141
+    Info (12023): Found entity 3: control File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 191
 Info (12021): Found 1 design units, including 1 entities, in source file rate_divider.v
     Info (12023): Found entity 1: rate_divider File: /home/nyah/Desktop/CSCB58-Final-Project/paint/rate_divider.v Line: 1
 Info (12021): Found 4 design units, including 4 entities, in source file controller.v
@@ -1072,14 +1084,27 @@ Warning (10230): Verilog HDL assignment warning at movement_control.v(12): trunc
 Warning (10230): Verilog HDL assignment warning at movement_control.v(14): truncated value with size 32 to match size of target (8) File: /home/nyah/Desktop/CSCB58-Final-Project/paint/movement_control.v Line: 14
 Warning (10230): Verilog HDL assignment warning at movement_control.v(16): truncated value with size 32 to match size of target (8) File: /home/nyah/Desktop/CSCB58-Final-Project/paint/movement_control.v Line: 16
 Warning (10230): Verilog HDL assignment warning at movement_control.v(18): truncated value with size 32 to match size of target (8) File: /home/nyah/Desktop/CSCB58-Final-Project/paint/movement_control.v Line: 18
-Info (12128): Elaborating entity "datapath" for hierarchy "datapath:d0" File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 107
-Warning (10230): Verilog HDL assignment warning at paint.v(156): truncated value with size 9 to match size of target (8) File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 156
-Warning (10230): Verilog HDL assignment warning at paint.v(158): truncated value with size 9 to match size of target (8) File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 158
-Warning (10230): Verilog HDL assignment warning at paint.v(181): truncated value with size 8 to match size of target (7) File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 181
-Info (12128): Elaborating entity "control" for hierarchy "control:c0" File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 122
-Warning (12241): 2 hierarchies have connectivity warnings - see the Connectivity Checks report folder
+Info (12128): Elaborating entity "datapath" for hierarchy "datapath:d0" File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 121
+Warning (10036): Verilog HDL or VHDL warning at paint.v(151): object "x" assigned a value but never read File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 151
+Warning (10036): Verilog HDL or VHDL warning at paint.v(152): object "y" assigned a value but never read File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 152
+Warning (12125): Using design file drawSquare.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info (12023): Found entity 1: drawSquare File: /home/nyah/Desktop/CSCB58-Final-Project/paint/drawSquare.v Line: 1
+Info (12128): Elaborating entity "drawSquare" for hierarchy "datapath:d0|drawSquare:sq" File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 187
+Warning (10230): Verilog HDL assignment warning at drawSquare.v(31): truncated value with size 4 to match size of target (3) File: /home/nyah/Desktop/CSCB58-Final-Project/paint/drawSquare.v Line: 31
+Warning (10230): Verilog HDL assignment warning at drawSquare.v(32): truncated value with size 4 to match size of target (3) File: /home/nyah/Desktop/CSCB58-Final-Project/paint/drawSquare.v Line: 32
+Warning (10034): Output port "LEDR[17..9]" at drawSquare.v(17) has no driver File: /home/nyah/Desktop/CSCB58-Final-Project/paint/drawSquare.v Line: 17
+Info (12128): Elaborating entity "control" for hierarchy "control:c0" File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 137
+Warning (12241): 3 hierarchies have connectivity warnings - see the Connectivity Checks report folder
 Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "LEDR[9]" is stuck at GND File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 22
+    Warning (13410): Pin "LEDR[10]" is stuck at GND File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 22
+    Warning (13410): Pin "LEDR[11]" is stuck at GND File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 22
+    Warning (13410): Pin "LEDR[12]" is stuck at GND File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 22
+    Warning (13410): Pin "LEDR[13]" is stuck at GND File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 22
+    Warning (13410): Pin "LEDR[14]" is stuck at GND File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 22
+    Warning (13410): Pin "LEDR[15]" is stuck at GND File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 22
     Warning (13410): Pin "LEDR[16]" is stuck at GND File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 22
+    Warning (13410): Pin "LEDR[17]" is stuck at GND File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 22
     Warning (13410): Pin "VGA_SYNC_N" is stuck at VCC File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 30
 Info (286030): Timing-Driven Synthesis is running
 Info (17049): 1 registers lost all their fanouts during netlist optimizations.
@@ -1097,17 +1122,17 @@ Warning (21074): Design contains 10 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "SW[13]" File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 20
     Warning (15610): No output dependent on input pin "SW[14]" File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 20
     Warning (15610): No output dependent on input pin "SW[15]" File: /home/nyah/Desktop/CSCB58-Final-Project/paint/paint.v Line: 20
-Info (21057): Implemented 390 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 386 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 23 input pins
     Info (21059): Implemented 53 output pins
-    Info (21061): Implemented 283 logic cells
+    Info (21061): Implemented 279 logic cells
     Info (21064): Implemented 30 RAM segments
     Info (21065): Implemented 1 PLLs
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 24 warnings
-    Info: Peak virtual memory: 1046 megabytes
-    Info: Processing ended: Mon Mar  9 11:09:19 2020
-    Info: Elapsed time: 00:00:10
-    Info: Total CPU time (on all processors): 00:00:24
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 35 warnings
+    Info: Peak virtual memory: 1051 megabytes
+    Info: Processing ended: Mon Mar  9 12:49:42 2020
+    Info: Elapsed time: 00:00:09
+    Info: Total CPU time (on all processors): 00:00:23
 
 
 +------------------------------------------+
