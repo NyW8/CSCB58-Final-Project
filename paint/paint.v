@@ -39,7 +39,7 @@ module paint
 	wire [2:0] colour;
 	wire [7:0] x;
 	wire [6:0] y;
-	wire writeEn, loadX, loadY, loadC;
+	wire writeEn, loadX, loadY, loadC, loadX2, loadX2;
 
 	// Create an Instance of a VGA controller - there can be only one!
 	// Define the number of colours as well as the initial background
@@ -113,11 +113,14 @@ module paint
 				.inColour(SW[9:7]),
 				.loadX(loadX),
 				.loadY(loadY),
+				.loadX2(loadX),
+				.loadY2(loadY),
 				.loadC(loadC),
 				.outX(x),
 				.outY(y),
 				.outColour(colour),
-				.LEDR(LEDR)
+				.LEDR(LEDR),
+				.selector(SW[16:14])
 				);
 	//assign LEDR[14:0] = {x, y};
     // Instansiate FSM control
@@ -128,19 +131,39 @@ module paint
 								.enableOut(checkControl),
 								.divide(28'd999_999));
    control c0(.start(start),
-   		  .reset_N(resetn),
+			  .selector(SW[16:14]),
+			  
+   		      .reset_N(resetn),
 			  .clk(checkControl),
 			  .loadX(loadX),
 			  .loadY(loadY),
+			  .loadX2(loadX2),
+			  .loadY2(loadY2),
 			  .loadC(loadC),
 			  .enable(writeEn)
 			  );
 	
 endmodule
 // added an input called size, if you need it for rectangle, you might want to modify it
-module datapath(xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadC, outX, outY, outColour, LEDR);
+module datapath(xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadX2, LoadY2, loadC, outX, outY, outColour, LEDR, selector);
+
+	reg freeForm, square, shape2, dontDraw;
+
+  	always@(selector)
+  	begin
+    freeForm = 1'b0;
+    square = 1'b0;
+    shape2 = 1'b0;
+    dontDraw = 1'b0;
+    case (selector)
+      2'b00 : dontDraw = 1'b1;
+      2'b01 : freeForm = 1'b1;
+      2'b10 : square = 1'b1;
+      2'b11 : shape2 = 1'b1;
+  	end
+	
 	input [7:0] xloc, yloc;
-	input clk, reset_N, loadX, loadY, loadC;
+	input clk, reset_N, loadX, loadY, loadC, loadX2, loadY2;
 	input [2:0] size;
 	input [2:0] inColour;
 	output [7:0] outX;
@@ -148,12 +171,16 @@ module datapath(xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadC, o
 	output [2:0] outColour;
 	output [17:0] LEDR;
 
-	reg [7:0] x;
-	reg [7:0] y;
+	reg [7:0] x, x2;
+	reg [7:0] y, y2;
 	reg [2:0] colour;
 	//reg [3:0] count;	//2 bits each since we want a 2x2 square
 	//reg [2:0] countX;	//size of square depends on size input, so requires separate count
 	//reg [2:0] countY;
+
+
+	wire [7:0] newXloc, newYloc;
+	wire startDrawSquare;
 
 	always @(posedge clk)
 	begin
@@ -161,6 +188,8 @@ module datapath(xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadC, o
 		begin
 			x <= 7'b0;
 			y <= 7'b0;
+			x2 <= 7'b0;
+			y2 <= 7'b0;
 			colour <= 3'b0;
 			//countX <= size;	//if size = n, coordinates move at most n-1
 			//countY <= size;
@@ -173,9 +202,29 @@ module datapath(xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadC, o
 				y <= yloc;
 			if (loadC)
 				colour <= inColour;
+			if (loadX2)
+				x2 <= xloc;
+			if (loadY2)
+				y2 <= yloc
 		end
 	end
+
+	always@(*)
+	begin
+
+	end
+
 	wire doneSq;
+	drawSquare sq(.X2(x2),
+					  .Y2(y2),
+					  .X(xloc),
+					  .Y(yloc),
+					  .start(startDrawSquare),
+					  .Out_X(outX),
+					  .Out_Y(outY),
+					  .Done(doneSq),
+					  .clk(clk), .LEDR(LEDR));
+/*
 	drawSquare sq(.S_X(size + 3'b10),
 					  .S_Y(size),
 					  .X(xloc),
@@ -185,6 +234,7 @@ module datapath(xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadC, o
 					  .Out_Y(outY),
 					  .Done(doneSq),
 					  .clk(clk), .LEDR(LEDR));
+*/
 	assign outColour = colour;
 endmodule
 
