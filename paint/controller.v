@@ -1,8 +1,8 @@
 module controller (Clock, SW);
 	input Clock;
 	input [17:0] SW;
-    wire colour[2:0];
-    setColour(SW[17:14],Clock, colour[2]);
+  wire colour[2:0];
+  setColour(SW[17:14],Clock, colour[2]);
 
   //States
   wire freeForm, shape1, shape2, dontDraw;
