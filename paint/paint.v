@@ -211,7 +211,11 @@ module datapath(xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadX2, 
 
 	always@(*)
 	begin
-
+		case (alu_selector)
+			2'b01 : startDrawSquare = 1'b1;
+			default : startDrawSquare = 1'b0;
+			//2'b11 : ;
+		endcase
 	end
 
 	wire doneSq;

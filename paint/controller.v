@@ -86,6 +86,7 @@ module controller(start, selector, reset_N, Clock, loadX, loadY, loadX2, loadY2,
 		loadY <= 1'b0;
 		loadC <= 1'b1;
 		enable <= 1'b0;
+    alu_select1 <= 2'b00;
 		case (current_state)
 			LOAD_X: loadX <= 1'b1;
 			LOAD_Y: loadY <= 1'b1;
@@ -96,14 +97,14 @@ module controller(start, selector, reset_N, Clock, loadX, loadY, loadX2, loadY2,
 				loadY <= 1'b0;
 				loadC <= 1'b0;
 				enable <= 1'b1;
-        alu_select1 <= 1'b0;
+        alu_select1 <= 2'b01;
 			end
       FREEDRAW: begin
 				loadX <= 1'b0;
 				loadY <= 1'b0;
 				loadC <= 1'b0;
 				enable <= 1'b1;
-        alu_select1 <= 1'b1;
+        alu_select1 <= 2'b11;
 			end
 		endcase
 	end
