@@ -58,9 +58,9 @@ Weekly Reports
 
 [This is an example of a report where things didn't go so well.]
 Week 1: 
-	We added and tested the sensors and the main FSM. 
-	The distance sensor we had intended to use didn't work as expected (wasn't precise enough at further distances, only seems to work accurately within 5-10cm), so instead we've decided to change the project to use a light sensor instead.
-	Had trouble getting the FSM to work (kept getting stuck in state 101, took longer to debug than expected), so we may not be able to add the high score feature. We have updated that in the project description as an optional feature.
+	We created a datapath that allows freeform drawing and drawing rectangles. We are still working on the FSM and the control unit so that we can switch between the two drawing modes.
+	There are still issues with the shape of the line; we haven't given enough time for the drawing to be done before moving the cursor and the current speed of the cursor is not the best.
+	We hope to fix those issues by the end of this week.
 
 
 
