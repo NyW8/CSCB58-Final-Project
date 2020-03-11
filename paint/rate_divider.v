@@ -20,4 +20,4 @@ module rate_divider (clock, resetN, enableOut, divide);
             RateDivider <= RateDivider - 28'b1;         //otherwise, just subtract from it
 	 end
     assign enableOut = (RateDivider == 28'b0) ? 1'b1 : 1'b0;
-endmodule
+endmodule 

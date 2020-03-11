@@ -44,6 +44,10 @@
 					"strict" : false
 				},
 				{
+					"name" : "LEDR[10]",
+					"strict" : false
+				},
+				{
 					"name" : "LEDR[11]",
 					"strict" : false
 				},
@@ -204,22 +208,6 @@
 					"strict" : false
 				},
 				{
-					"name" : "KEY[0]",
-					"strict" : false
-				},
-				{
-					"name" : "KEY[1]",
-					"strict" : false
-				},
-				{
-					"name" : "KEY[2]",
-					"strict" : false
-				},
-				{
-					"name" : "KEY[3]",
-					"strict" : false
-				},
-				{
 					"name" : "SW[0]",
 					"strict" : false
 				},
@@ -240,11 +228,7 @@
 					"strict" : false
 				},
 				{
-					"name" : "SW[17]",
-					"strict" : false
-				},
-				{
-					"name" : "SW[9]",
+					"name" : "SW[7]",
 					"strict" : false
 				},
 				{
@@ -252,7 +236,27 @@
 					"strict" : false
 				},
 				{
-					"name" : "SW[7]",
+					"name" : "SW[9]",
+					"strict" : false
+				},
+				{
+					"name" : "KEY[0]",
+					"strict" : false
+				},
+				{
+					"name" : "KEY[2]",
+					"strict" : false
+				},
+				{
+					"name" : "KEY[1]",
+					"strict" : false
+				},
+				{
+					"name" : "KEY[3]",
+					"strict" : false
+				},
+				{
+					"name" : "SW[17]",
 					"strict" : false
 				}
 			]

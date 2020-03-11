@@ -16,7 +16,6 @@ module drawSquare(S_X,
 	output reg Done;
 	
 	reg [3:0] xCounter, yCounter;
-	reg [5:0] counter;
 	
 	always@(posedge clk)
 	begin
@@ -24,14 +23,12 @@ module drawSquare(S_X,
 		begin //resets counters
 			xCounter <= S_X;
 			yCounter <= S_Y;
-			counter [5:3] <= S_X;
-			counter [2:0] <= S_Y;
 			if (start)
 				Done <= 1'b0;
 		end
-		else
+		else	//start && not done
 			begin
-				if(yCounter == 3'b0) 
+				if(yCounter == 3'b0) 	//set yCounter back to S_Y and decrement xCounter if not yet 0
 				begin //While block not filled
 					if (xCounter == 3'b0)
 						Done <= 1'b1;

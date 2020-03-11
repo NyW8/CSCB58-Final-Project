@@ -1,1 +1,1 @@
-Info (10281): Verilog HDL Declaration information at controller.v(8): object "dontDraw" differs only in case from object "DONTDRAW" in the same scope File: /cmshome/waynyah/Desktop/CSCB58-Final-Project/paint/controller.v Line: 8
+Info (10281): Verilog HDL Declaration information at controller.v(8): object "dontDraw" differs only in case from object "DONTDRAW" in the same scope File: C:/Users/Artina/Documents/utsc/2020_winter/cscb58/CSCB58-Final-Project.git/branches/fixing_lines_issue/paint/controller.v Line: 8

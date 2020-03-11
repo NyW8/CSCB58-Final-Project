@@ -1,16 +1,16 @@
-Fitter Status : Successful - Tue Mar 10 20:49:49 2020
+Fitter Status : Successful - Wed Mar 11 11:15:55 2020
 Quartus Prime Version : 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 Revision Name : paint
 Top-level Entity Name : paint
 Family : Cyclone IV E
 Device : EP4CE115F29C7
 Timing Models : Final
-Total logic elements : 197 / 114,480 ( < 1 % )
-    Total combinational functions : 191 / 114,480 ( < 1 % )
-    Dedicated logic registers : 98 / 114,480 ( < 1 % )
-Total registers : 98
+Total logic elements : 245 / 114,480 ( < 1 % )
+    Total combinational functions : 234 / 114,480 ( < 1 % )
+    Dedicated logic registers : 102 / 114,480 ( < 1 % )
+Total registers : 102
 Total pins : 76 / 529 ( 14 % )
 Total virtual pins : 0
-Total memory bits : 57,600 / 3,981,312 ( 1 % )
+Total memory bits : 230,400 / 3,981,312 ( 6 % )
 Embedded Multiplier 9-bit elements : 0 / 532 ( 0 % )
 Total PLLs : 1 / 4 ( 25 % )

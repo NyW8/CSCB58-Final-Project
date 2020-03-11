@@ -60,7 +60,7 @@ module paint
 			.VGA_BLANK(VGA_BLANK_N),
 			.VGA_SYNC(VGA_SYNC_N),
 			.VGA_CLK(VGA_CLK));
-		defparam VGA.RESOLUTION = "640x480";
+		defparam VGA.RESOLUTION = "160x120";
 		defparam VGA.MONOCHROME = "FALSE";
 		defparam VGA.BITS_PER_COLOUR_CHANNEL = 1;
 		defparam VGA.BACKGROUND_IMAGE = "black.mif";
@@ -84,12 +84,16 @@ module paint
 				.enDraw(enPlot),
 				.outX(x),
 				.outY(y),
-				.outColour(colour),
-				  .LEDR(LEDR[14:0]));
+				.outColour(colour));
+				  //.LEDR(LEDR[14:0]));
 	//assign LEDR[14:0] = {x, y};
-	assign LEDR[17] = loadX;
+	assign LEDR[17] = enMove;
 	assign LEDR[16] = enPlot;
 	assign LEDR[15] = loadC;
+	assign LEDR [11:0] = {x[5:0], y[5:0]};
+	assign LEDR [14:12] = colour;
+	
+	wire controlclk;
 	
    control c0(.start(start),
 				  .reset_N(resetn),
@@ -102,26 +106,26 @@ module paint
 			     );
 	
 endmodule
-// added an input called size, if you need it for rectangle, you might want to modify it
-module datapath(/*xloc, yloc,*/ directions, clk, reset_N, size, inColour, loadX, loadY, loadC, enMove, enDraw, outX, outY, outColour, LEDR);
+
+module datapath(/*xloc, yloc,*/ directions, clk, reset_N, size, inColour, loadX, loadY, loadC, enMove, enDraw, outX, outY, outColour);//, LEDR);
 	//input [7:0] xloc, yloc;
 	input [3:0] directions;
 	input clk, reset_N, loadX, loadY, loadC, enMove, enDraw;
 	input [2:0] size;
 	input [2:0] inColour;
-	output [7:0] outX;
+	output [7:0] outX;	//output to VGA adapter
 	output [7:0] outY;
 	output [2:0] outColour;
-	output[14:0] LEDR;
+	//output[14:0] LEDR;	//for testing
 
-	reg [7:0] x;
+	reg [7:0] x;	//x and y location
 	reg [7:0] y;
 	reg [2:0] colour;
 	//reg [3:0] count;	//2 bits each since we want a 2x2 square
 	//reg [2:0] countX;	//size of square depends on size input, so requires separate count
 	//reg [2:0] countY;
 								
-	wire [7:0] cursorX, cursorY;
+	wire [7:0] cursorX, cursorY;		//changes in movement module depending on directions input
 	always @(posedge clk)
 	begin
 		if (reset_N == 1'b0)
@@ -134,15 +138,15 @@ module datapath(/*xloc, yloc,*/ directions, clk, reset_N, size, inColour, loadX,
 		end
 		else 
 		begin
-			if (loadX)
+			if (loadX || enMove)
 				x <= cursorX;
-			if (loadY)
+			if (loadY || enMove)
 				y <= cursorY;
 			if (loadC)
 				colour <= inColour;
 		end
 	end
-	wire doneSq;
+	wire doneSq;	//a signal to indicate the drawing is done
 	drawSquare sq(.S_X(size),
 					  .S_Y(size),
 					  .X(x),
@@ -152,15 +156,24 @@ module datapath(/*xloc, yloc,*/ directions, clk, reset_N, size, inColour, loadX,
 					  .Out_Y(outY),
 					  .Done(doneSq),
 					  .clk(clk));
+					  
+					  
+	wire moveclk;
+	rate_divider slow_movement(.clock(clk),
+										.resetN(reset_N),
+										.enableOut(moveclk),
+										.divide(28'd12_500_000));	//hoping to slow move to read 4 frames per second
+					  
 	movement_control movement(.inX(cursorX),
 									  .inY(cursorY),
 									  .directions(directions),
+									  .enMove(enMove),
 									  .outX(cursorX),
 									  .outY(cursorY),
-									  .clock(enMove));
+									  .clock(clk));
 	assign outColour = colour;
-	assign LEDR [9:0] = {outX[4:0], outY[4:0]};
-	assign LEDR [14:11] = directions;
+	/*assign LEDR [9:0] = {outX[4:0], outY[4:0]};
+	assign LEDR [14:11] = outColour;*/
 endmodule
 
 module control(start, reset_N, clk, loadX, loadY, loadC, enMove, enPlot);//, LEDR);
