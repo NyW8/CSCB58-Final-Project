@@ -1,8 +1,10 @@
 module movement_control (inX, inY, directions, enMove, outX, outY, clock);
-	input [7:0] inX, inY;
+	input [7:0] inX;
+	input [6:0] inY;
 	input [3:0] directions;	//clockwise from left: left, up, right, down
 	input enMove;
-	output reg [7:0] outX, outY;
+	output reg [7:0] outX;
+	output reg [6:0] outY;
 	input clock;
 	
 	always @(posedge clock)

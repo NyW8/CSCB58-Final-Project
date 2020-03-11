@@ -68,7 +68,7 @@ module paint
 	// Put your code here. Your code should produce signals x,y,colour and writeEn/plot
 	// for the VGA controller, in addition to any other functionality your design may require.
     
-	wire checkMovement, resetClock, start, enMove, checkControl;
+	wire start, enMove;
 	wire [3:0] directions;
 	assign start = SW[17];
 	assign directions = ~KEY[3:0];
@@ -85,15 +85,14 @@ module paint
 				.outX(x),
 				.outY(y),
 				.outColour(colour));
-				  //.LEDR(LEDR[14:0]));
-	//assign LEDR[14:0] = {x, y};
+				
+	//output lights for testing, feel free to change			
 	assign LEDR[17] = enMove;
 	assign LEDR[16] = enPlot;
 	assign LEDR[15] = loadC;
 	assign LEDR [11:0] = {x[5:0], y[5:0]};
 	assign LEDR [14:12] = colour;
 	
-	wire controlclk;
 	
    control c0(.start(start),
 				  .reset_N(resetn),
@@ -107,23 +106,18 @@ module paint
 	
 endmodule
 
-module datapath(/*xloc, yloc,*/ directions, clk, reset_N, size, inColour, loadX, loadY, loadC, enMove, enDraw, outX, outY, outColour);//, LEDR);
-	//input [7:0] xloc, yloc;
+module datapath(directions, clk, reset_N, size, inColour, loadX, loadY, loadC, enMove, enDraw, outX, outY, outColour);
 	input [3:0] directions;
 	input clk, reset_N, loadX, loadY, loadC, enMove, enDraw;
 	input [2:0] size;
 	input [2:0] inColour;
 	output [7:0] outX;	//output to VGA adapter
-	output [7:0] outY;
+	output [6:0] outY;
 	output [2:0] outColour;
-	//output[14:0] LEDR;	//for testing
 
 	reg [7:0] x;	//x and y location
-	reg [7:0] y;
+	reg [6:0] y;
 	reg [2:0] colour;
-	//reg [3:0] count;	//2 bits each since we want a 2x2 square
-	//reg [2:0] countX;	//size of square depends on size input, so requires separate count
-	//reg [2:0] countY;
 								
 	wire [7:0] cursorX, cursorY;		//changes in movement module depending on directions input
 	always @(posedge clk)
@@ -131,10 +125,8 @@ module datapath(/*xloc, yloc,*/ directions, clk, reset_N, size, inColour, loadX,
 		if (reset_N == 1'b0)
 		begin
 			x <= 7'b0;
-			y <= 7'b0;
+			y <= 6'b0;
 			colour <= 3'b0;
-			//countX <= size;	//if size = n, coordinates move at most n-1
-			//countY <= size;
 		end
 		else 
 		begin
@@ -156,13 +148,6 @@ module datapath(/*xloc, yloc,*/ directions, clk, reset_N, size, inColour, loadX,
 					  .Out_Y(outY),
 					  .Done(doneSq),
 					  .clk(clk));
-					  
-					  
-	wire moveclk;
-	rate_divider slow_movement(.clock(clk),
-										.resetN(reset_N),
-										.enableOut(moveclk),
-										.divide(28'd12_500_000));	//hoping to slow move to read 4 frames per second
 					  
 	movement_control movement(.inX(cursorX),
 									  .inY(cursorY),
