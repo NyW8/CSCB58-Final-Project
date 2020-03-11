@@ -1,14 +1,14 @@
-Analysis & Synthesis Status : Failed - Tue Mar 10 20:53:28 2020
+Analysis & Synthesis Status : Successful - Wed Mar 11 12:56:14 2020
 Quartus Prime Version : 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 Revision Name : paint
 Top-level Entity Name : paint
 Family : Cyclone IV E
-Total logic elements : N/A until Partition Merge
-    Total combinational functions : N/A until Partition Merge
-    Dedicated logic registers : N/A until Partition Merge
-Total registers : N/A until Partition Merge
-Total pins : N/A until Partition Merge
-Total virtual pins : N/A until Partition Merge
-Total memory bits : N/A until Partition Merge
-Embedded Multiplier 9-bit elements : N/A until Partition Merge
-Total PLLs : N/A until Partition Merge
+Total logic elements : 363
+    Total combinational functions : 358
+    Dedicated logic registers : 169
+Total registers : 169
+Total pins : 76
+Total virtual pins : 0
+Total memory bits : 57,600
+Embedded Multiplier 9-bit elements : 0
+Total PLLs : 1

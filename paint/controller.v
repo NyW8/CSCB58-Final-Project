@@ -1,6 +1,6 @@
-module controller(start,startPrime, selector, reset_N, Clock, loadX, loadY, loadX2, loadY2, loadC, enable, alu_select1 , led);
+module controller(start, startPrime, selector, reset_N, Clock, doneSq, loadX, loadY, loadX2, loadY2, loadC, enable, alu_select1 , led);
 	
-	input start, startPrime, reset_N, Clock;
+	input start, startPrime, reset_N, Clock, doneSq;
 	output reg loadX, loadY, loadX2, loadY2, loadC;
 	input [1:0] selector;
 	output reg enable;
@@ -40,7 +40,7 @@ module controller(start,startPrime, selector, reset_N, Clock, loadX, loadY, load
            
   //condition should be when the 
   wire go;
-  assign go = start; //switch 17
+  assign go = start; //switch 13
 
 	reg inDrawingState;
   always@(posedge Clock)
@@ -50,13 +50,13 @@ module controller(start,startPrime, selector, reset_N, Clock, loadX, loadY, load
     if (square)
       begin
         case (current_state)
-          WAIT    : next_state = go ? LOAD_X : WAIT;
-          LOAD_X  : next_state = go ? LOAD_Y : LOAD_X;
-          LOAD_Y  : next_state = go ? WAIT_2 : LOAD_Y;
-          WAIT_2  : next_state = go ? LOAD_X2 : WAIT_2;
-          LOAD_X2 : next_state = go ? LOAD_Y2 : LOAD_X2;
-          LOAD_Y2 : next_state = go ? DRAW : LOAD_Y2;
-          DRAW : next_state = go ? WAIT : DRAW;
+          WAIT    : next_state = start ? LOAD_X : WAIT;
+          LOAD_X  : next_state = LOAD_Y;
+          LOAD_Y  : next_state = WAIT_2;
+          WAIT_2  : next_state = !start ? LOAD_X2 : WAIT_2;
+          LOAD_X2 : next_state = LOAD_Y2;
+          LOAD_Y2 : next_state = DRAW;
+          DRAW : next_state = doneSq ? WAIT : DRAW;
           default : next_state = WAIT;
         endcase
       end
@@ -71,9 +71,11 @@ module controller(start,startPrime, selector, reset_N, Clock, loadX, loadY, load
 			 next_state = start ? FREEDRAW : WAIT;
 			 inDrawingState = 1'b0;
           end
+			 LOAD_X : next_state = LOAD_Y;
+			 LOAD_Y : next_state = FREEDRAW;
 			 FREEDRAW : 
 			 begin
-			 next_state = startPrime ? WAIT : FREEDRAW;
+			 next_state = doneSq ? WAIT : FREEDRAW;
 			inDrawingState = 1'b1;
 			 end
 		  endcase
@@ -94,13 +96,15 @@ module controller(start,startPrime, selector, reset_N, Clock, loadX, loadY, load
 	begin 
 		loadX <= 1'b0;
 		loadY <= 1'b0;
+		loadX2 <= 1'b0;
+		loadY2 <= 1'b0;
 		loadC <= 1'b1;
 		enable <= 1'b0;
     alu_select1 <= 2'b00;
 		case (current_state)
 			LOAD_X: loadX <= 1'b1;
 			LOAD_Y: loadY <= 1'b1;
-      LOAD_X2: loadX2 <= 1'b1;
+			LOAD_X2: loadX2 <= 1'b1;
 			LOAD_Y2: loadY2 <= 1'b1;
 			DRAW : begin
 				loadX <= 1'b0;
@@ -110,8 +114,8 @@ module controller(start,startPrime, selector, reset_N, Clock, loadX, loadY, load
         alu_select1 <= 2'b01;
 			end
       FREEDRAW: begin
-				loadX <= 1'b0;
-				loadY <= 1'b0;
+				loadX <= 1'b1;
+				loadY <= 1'b1;
 				loadC <= 1'b0;
 				enable <= 1'b1;
         alu_select1 <= 2'b11;

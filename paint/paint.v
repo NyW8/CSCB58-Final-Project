@@ -60,7 +60,7 @@ module paint
 			.VGA_BLANK(VGA_BLANK_N),
 			.VGA_SYNC(VGA_SYNC_N),
 			.VGA_CLK(VGA_CLK));
-		defparam VGA.RESOLUTION = "320x240";
+		defparam VGA.RESOLUTION = "160x120";
 		defparam VGA.MONOCHROME = "FALSE";
 		defparam VGA.BITS_PER_COLOUR_CHANNEL = 1;
 		defparam VGA.BACKGROUND_IMAGE = "black.mif";
@@ -104,7 +104,9 @@ module paint
 					  .Done(doneSq),
 					  .clk(clk));
 	assign LEDR [14:0] = {outX, outY};*/
-					  
+			
+	wire doneSq;
+	
 	datapath d0(.xloc(cursorX),
 				.yloc(cursorY),
 				.clk(CLOCK_50),
@@ -119,7 +121,9 @@ module paint
 				.outX(x),
 				.outY(y),
 				.outColour(colour),
-				.selector(SW[15:14])
+				.selector(SW[15:14]),
+				.doneSq(doneSq),
+				.LEDR(LEDR[14:0])
 				);
 	//assign LEDR[14:0] = {x, y};
     // Instansiate FSM control
@@ -131,11 +135,12 @@ module paint
 								.divide(28'd999_999));
    controller c0(
 				.start(SW[13]),
-				.startPrime([SW[12]])
+				.startPrime(SW[12]),
 			  .selector(SW[15:14]),
 			  
    		      .reset_N(resetn),
 			  .Clock(checkControl),
+			  .doneSq(doneSq),
 			  .loadX(loadX),
 			  .loadY(loadY),
 			  .loadX2(loadX2),
@@ -144,12 +149,17 @@ module paint
 			  .enable(writeEn),
 			  .led(LEDR[15])
 			  );
+			  
+	//assign LEDR [11:0] = {x[5:0], y[5:0]};
+	//assign LEDR [14:12] = size;
 	
 endmodule
 // added an input called size, if you need it for rectangle, you might want to modify it
-module datapath(alu_selector, xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadX2, loadY2, loadC, outX, outY, outColour, selector);
+module datapath(alu_selector, xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadX2, loadY2, loadC, outX, outY, outColour, selector, doneSq, LEDR);
 
 	reg freeForm, square, shape2, dontDraw;
+	
+	output [14:0] LEDR;
 	
 	input [1:0] alu_selector;
 	input [7:0] xloc, yloc;
@@ -160,6 +170,7 @@ module datapath(alu_selector, xloc, yloc, clk, reset_N, size, inColour, loadX, l
 	output [7:0] outY;
 	output [2:0] outColour;
 	input [1:0] selector;
+	output doneSq;
 	
 	reg [7:0] x, x2;
 	reg [7:0] y, y2;
@@ -168,6 +179,8 @@ module datapath(alu_selector, xloc, yloc, clk, reset_N, size, inColour, loadX, l
 	//reg [2:0] countX;	//size of square depends on size input, so requires separate count
 	//reg [2:0] countY;
 
+	assign LEDR [14:0] = {x[6:0], x2};
+	
 	/*
   	always@(selector)
   	begin
@@ -224,17 +237,16 @@ module datapath(alu_selector, xloc, yloc, clk, reset_N, size, inColour, loadX, l
 	begin
 		case (alu_selector)
 			2'b01 : startDrawSquare = 1'b1;
+			2'b11 : startDrawSquare = 1'b1;
 			default : startDrawSquare = 1'b0;
 			//2'b11 : ;
 		endcase
 	end
-
-	wire doneSq;
 	
 	drawSquare sq(.X2(x2),
 					  .Y2(y2),
-					  .X(xloc),
-					  .Y(yloc),
+					  .X(x),
+					  .Y(y),
 					  .start(startDrawSquare),
 					  .Out_X(outX),
 					  .Out_Y(outY),
