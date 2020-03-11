@@ -1,27 +1,36 @@
-module drawSquare(S_X,
-					S_Y,
+module drawSquare(X2,
+					Y2,
 					start,
 					X,
 					Y,
 					Out_X,
 					Out_Y,
 					Done,
-					clk, LEDR
+					clk
 					);
 
 	input clk, start;
-	input [3:0] S_X, S_Y;
+	input [7:0] X2, Y2;
 	input [7:0] X, Y;
 	output [7:0] Out_X, Out_Y;
 	output reg Done;
-	output [17:0] LEDR;
+	
+	//looks of comments, just for you Artina && Nyah. U r welcomee!
+	//topLeft X , topLeft Y, bottomRight X, bottomLeft Y
+	reg [7:0] tLX, tLY;
+	reg [3:0] S_X, S_Y;
+	
+	always@(X2 | X | Y2 | Y)
+	begin
+		tLX = (Y2 <= Y) ? X2 : X;
+		S_X = (X2 <= X) ? X - X2 : X2 - X;
+		tLY = (Y2 <= Y) ? Y2 : Y;
+		S_Y = (Y2 <= Y) ? Y - Y2 : Y2 - Y;
+	end
+	
 	
 	reg [3:0] xCounter, yCounter;
 	reg [5:0] counter;
-	assign LEDR [5:0] = counter;
-	assign LEDR [6] = Done;
-	assign LEDR [7] = start;
-	assign LEDR [8] = !start;
 	always@(posedge clk)
 	begin
 		if (!start || Done)

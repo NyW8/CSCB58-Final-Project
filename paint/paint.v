@@ -39,7 +39,7 @@ module paint
 	wire [2:0] colour;
 	wire [7:0] x;
 	wire [6:0] y;
-	wire writeEn, loadX, loadY, loadC, loadX2, loadX2;
+	wire writeEn, loadX, loadY, loadC, loadX2, loadY2;
 
 	// Create an Instance of a VGA controller - there can be only one!
 	// Define the number of colours as well as the initial background
@@ -113,14 +113,13 @@ module paint
 				.inColour(SW[9:7]),
 				.loadX(loadX),
 				.loadY(loadY),
-				.loadX2(loadX),
-				.loadY2(loadY),
+				.loadX2(loadX2),
+				.loadY2(loadY2),
 				.loadC(loadC),
 				.outX(x),
 				.outY(y),
 				.outColour(colour),
-				.LEDR(LEDR),
-				.selector(SW[16:14])
+				.selector(SW[15:14])
 				);
 	//assign LEDR[14:0] = {x, y};
     // Instansiate FSM control
@@ -130,25 +129,46 @@ module paint
 								.resetN(resetn),
 								.enableOut(checkControl),
 								.divide(28'd999_999));
-   control c0(.start(start),
-			  .selector(SW[16:14]),
+   controller c0(
+				.start(SW[13]),
+				.startPrime([SW[12]])
+			  .selector(SW[15:14]),
 			  
    		      .reset_N(resetn),
-			  .clk(checkControl),
+			  .Clock(checkControl),
 			  .loadX(loadX),
 			  .loadY(loadY),
 			  .loadX2(loadX2),
 			  .loadY2(loadY2),
 			  .loadC(loadC),
-			  .enable(writeEn)
+			  .enable(writeEn),
+			  .led(LEDR[15])
 			  );
 	
 endmodule
 // added an input called size, if you need it for rectangle, you might want to modify it
-module datapath(xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadX2, LoadY2, loadC, outX, outY, outColour, LEDR, selector);
+module datapath(alu_selector, xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadX2, loadY2, loadC, outX, outY, outColour, selector);
 
 	reg freeForm, square, shape2, dontDraw;
+	
+	input [1:0] alu_selector;
+	input [7:0] xloc, yloc;
+	input clk, reset_N, loadX, loadY, loadC, loadX2, loadY2;
+	input [2:0] size;
+	input [2:0] inColour;
+	output [7:0] outX;
+	output [7:0] outY;
+	output [2:0] outColour;
+	input [1:0] selector;
+	
+	reg [7:0] x, x2;
+	reg [7:0] y, y2;
+	reg [2:0] colour;
+	//reg [3:0] count;	//2 bits each since we want a 2x2 square
+	//reg [2:0] countX;	//size of square depends on size input, so requires separate count
+	//reg [2:0] countY;
 
+	/*
   	always@(selector)
   	begin
     freeForm = 1'b0;
@@ -160,27 +180,12 @@ module datapath(xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadX2, 
       2'b01 : freeForm = 1'b1;
       2'b10 : square = 1'b1;
       2'b11 : shape2 = 1'b1;
+   endcase
   	end
-	
-	input [7:0] xloc, yloc;
-	input clk, reset_N, loadX, loadY, loadC, loadX2, loadY2;
-	input [2:0] size;
-	input [2:0] inColour;
-	output [7:0] outX;
-	output [7:0] outY;
-	output [2:0] outColour;
-	output [17:0] LEDR;
-
-	reg [7:0] x, x2;
-	reg [7:0] y, y2;
-	reg [2:0] colour;
-	//reg [3:0] count;	//2 bits each since we want a 2x2 square
-	//reg [2:0] countX;	//size of square depends on size input, so requires separate count
-	//reg [2:0] countY;
-
+	*/
 
 	wire [7:0] newXloc, newYloc;
-	wire startDrawSquare;
+	reg startDrawSquare;
 
 	always @(posedge clk)
 	begin
@@ -197,15 +202,21 @@ module datapath(xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadX2, 
 		else 
 		begin
 			if (loadX)
+			begin
 				x <= xloc;
+				x2 <= xloc + size;
+			end
 			if (loadY)
+			begin
 				y <= yloc;
+				y2 <= yloc + size;
+			end
 			if (loadC)
 				colour <= inColour;
 			if (loadX2)
 				x2 <= xloc;
 			if (loadY2)
-				y2 <= yloc
+				y2 <= yloc;
 		end
 	end
 
@@ -219,6 +230,7 @@ module datapath(xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadX2, 
 	end
 
 	wire doneSq;
+	
 	drawSquare sq(.X2(x2),
 					  .Y2(y2),
 					  .X(xloc),
@@ -227,18 +239,7 @@ module datapath(xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadX2, 
 					  .Out_X(outX),
 					  .Out_Y(outY),
 					  .Done(doneSq),
-					  .clk(clk), .LEDR(LEDR));
-/*
-	drawSquare sq(.S_X(size + 3'b10),
-					  .S_Y(size),
-					  .X(xloc),
-					  .Y(yloc),
-					  .start(reset_N),
-					  .Out_X(outX),
-					  .Out_Y(outY),
-					  .Done(doneSq),
-					  .clk(clk), .LEDR(LEDR));
-*/
+					  .clk(clk));
 	assign outColour = colour;
 endmodule
 

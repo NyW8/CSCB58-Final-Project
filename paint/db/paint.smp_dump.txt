@@ -1,6 +1,22 @@
 
-State Machine - |paint|control:c0|state
-Name state.SDRAW state.SLOADX state.SLOADY 
-state.SLOADX 0 0 0 
-state.SLOADY 0 1 1 
-state.SDRAW 1 1 0 
+State Machine - |paint|controller:c0|current_state
+Name current_state.FREEDRAW current_state.DRAW current_state.LOAD_Y2 current_state.LOAD_X2 current_state.WAIT_2 current_state.LOAD_Y current_state.LOAD_X current_state.WAIT 
+current_state.WAIT 0 0 0 0 0 0 0 0 
+current_state.LOAD_X 0 0 0 0 0 0 1 1 
+current_state.LOAD_Y 0 0 0 0 0 1 0 1 
+current_state.WAIT_2 0 0 0 0 1 0 0 1 
+current_state.LOAD_X2 0 0 0 1 0 0 0 1 
+current_state.LOAD_Y2 0 0 1 0 0 0 0 1 
+current_state.DRAW 0 1 0 0 0 0 0 1 
+current_state.FREEDRAW 1 0 0 0 0 0 0 1 
+
+State Machine - |paint|controller:c0|next_state
+Name next_state.FREEDRAW next_state.DRAW next_state.LOAD_Y2 next_state.LOAD_X2 next_state.WAIT_2 next_state.LOAD_Y next_state.LOAD_X next_state.WAIT 
+next_state.WAIT 0 0 0 0 0 0 0 0 
+next_state.LOAD_X 0 0 0 0 0 0 1 1 
+next_state.LOAD_Y 0 0 0 0 0 1 0 1 
+next_state.WAIT_2 0 0 0 0 1 0 0 1 
+next_state.LOAD_X2 0 0 0 1 0 0 0 1 
+next_state.LOAD_Y2 0 0 1 0 0 0 0 1 
+next_state.DRAW 0 1 0 0 0 0 0 1 
+next_state.FREEDRAW 1 0 0 0 0 0 0 1 
