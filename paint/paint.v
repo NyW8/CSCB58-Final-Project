@@ -39,7 +39,7 @@ module paint
 	wire [2:0] colour;
 	wire [7:0] x;
 	wire [6:0] y;
-	wire writeEn, loadX, loadY, loadC;
+	wire enPlot, loadX, loadY, loadC;
 
 	// Create an Instance of a VGA controller - there can be only one!
 	// Define the number of colours as well as the initial background
@@ -50,7 +50,7 @@ module paint
 			.colour(colour),
 			.x(x),
 			.y(y),
-			.plot(writeEn),
+			.plot(enPlot),
 			/* Signals for the DAC to drive the monitor. */
 			.VGA_R(VGA_R),
 			.VGA_G(VGA_G),
@@ -60,7 +60,7 @@ module paint
 			.VGA_BLANK(VGA_BLANK_N),
 			.VGA_SYNC(VGA_SYNC_N),
 			.VGA_CLK(VGA_CLK));
-		defparam VGA.RESOLUTION = "320x240";
+		defparam VGA.RESOLUTION = "640x480";
 		defparam VGA.MONOCHROME = "FALSE";
 		defparam VGA.BITS_PER_COLOUR_CHANNEL = 1;
 		defparam VGA.BACKGROUND_IMAGE = "black.mif";
@@ -68,45 +68,11 @@ module paint
 	// Put your code here. Your code should produce signals x,y,colour and writeEn/plot
 	// for the VGA controller, in addition to any other functionality your design may require.
     
-    // Instansiate datapath
-	// datapath d0(...);
-	
-	
-	//Testing movementControl:
-	//this current implementation works, feel free to copy/paste!
-	wire checkMovement, resetClock;
-	wire [7:0] cursorX, cursorY;
+	wire checkMovement, resetClock, start, enMove, checkControl;
 	wire [3:0] directions;
-	assign directions = ~KEY[3:0];
-	rate_divider movement_divider(.clock(CLOCK_50),
-								.resetN(resetn),
-								.enableOut(checkMovement),
-								.divide(28'd15_999_999));
-	movement_control movement(.inX(cursorX),
-									  .inY(cursorY),
-									  .directions(directions),
-									  .outX(cursorX),
-									  .outY(cursorY),
-									  .clock(checkMovement));
-									  
-	//assign LEDR [16:0] = {cursorX, cursorY};	//cursorX in 16:9, cursorY in 8:0
-	//assign LEDR[17] = ~cursorX[0];
-	
-	wire start;
 	assign start = SW[17];
-	/*drawSquare sq(.S_X(4'b0010),
-					  .S_Y(4'b0010),
-					  .X(8'b00111111),
-					  .Y(8'b00111111),
-					  .start(start),
-					  .Out_X(outX),
-					  .Out_Y(outY),
-					  .Done(doneSq),
-					  .clk(clk));
-	assign LEDR [14:0] = {outX, outY};*/
-					  
-	datapath d0(.xloc(cursorX),
-				.yloc(cursorY),
+	assign directions = ~KEY[3:0];
+	datapath d0(.directions(directions),
 				.clk(CLOCK_50),
 				.reset_N(resetn),
 				.size(SW[2:0]),
@@ -114,39 +80,39 @@ module paint
 				.loadX(loadX),
 				.loadY(loadY),
 				.loadC(loadC),
+				.enMove(enMove),
+				.enDraw(enPlot),
 				.outX(x),
 				.outY(y),
 				.outColour(colour),
-				.LEDR(LEDR)
-				);
+				  .LEDR(LEDR[14:0]));
 	//assign LEDR[14:0] = {x, y};
-    // Instansiate FSM control
-    // control c0(...);
-	 wire checkControl;
-	rate_divider movement_divider2(.clock(CLOCK_50),
-								.resetN(resetn),
-								.enableOut(checkControl),
-								.divide(28'd999_999));
+	assign LEDR[17] = loadX;
+	assign LEDR[16] = enPlot;
+	assign LEDR[15] = loadC;
+	
    control c0(.start(start),
-   		  .reset_N(resetn),
-			  .clk(checkControl),
-			  .loadX(loadX),
-			  .loadY(loadY),
-			  .loadC(loadC),
-			  .enable(writeEn)
-			  );
+				  .reset_N(resetn),
+			     .clk(CLOCK_50),
+			     .loadX(loadX),
+			     .loadY(loadY),
+			     .loadC(loadC),
+				  .enMove(enMove),
+			     .enPlot(enPlot)
+			     );
 	
 endmodule
 // added an input called size, if you need it for rectangle, you might want to modify it
-module datapath(xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadC, outX, outY, outColour, LEDR);
-	input [7:0] xloc, yloc;
-	input clk, reset_N, loadX, loadY, loadC;
+module datapath(/*xloc, yloc,*/ directions, clk, reset_N, size, inColour, loadX, loadY, loadC, enMove, enDraw, outX, outY, outColour, LEDR);
+	//input [7:0] xloc, yloc;
+	input [3:0] directions;
+	input clk, reset_N, loadX, loadY, loadC, enMove, enDraw;
 	input [2:0] size;
 	input [2:0] inColour;
 	output [7:0] outX;
 	output [7:0] outY;
 	output [2:0] outColour;
-	output [17:0] LEDR;
+	output[14:0] LEDR;
 
 	reg [7:0] x;
 	reg [7:0] y;
@@ -154,7 +120,8 @@ module datapath(xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadC, o
 	//reg [3:0] count;	//2 bits each since we want a 2x2 square
 	//reg [2:0] countX;	//size of square depends on size input, so requires separate count
 	//reg [2:0] countY;
-
+								
+	wire [7:0] cursorX, cursorY;
 	always @(posedge clk)
 	begin
 		if (reset_N == 1'b0)
@@ -168,41 +135,53 @@ module datapath(xloc, yloc, clk, reset_N, size, inColour, loadX, loadY, loadC, o
 		else 
 		begin
 			if (loadX)
-				x <= xloc;
+				x <= cursorX;
 			if (loadY)
-				y <= yloc;
+				y <= cursorY;
 			if (loadC)
 				colour <= inColour;
 		end
 	end
 	wire doneSq;
-	drawSquare sq(.S_X(size + 3'b10),
+	drawSquare sq(.S_X(size),
 					  .S_Y(size),
-					  .X(xloc),
-					  .Y(yloc),
-					  .start(reset_N),
+					  .X(x),
+					  .Y(y),
+					  .start(enDraw),
 					  .Out_X(outX),
 					  .Out_Y(outY),
 					  .Done(doneSq),
-					  .clk(clk), .LEDR(LEDR));
+					  .clk(clk));
+	movement_control movement(.inX(cursorX),
+									  .inY(cursorY),
+									  .directions(directions),
+									  .outX(cursorX),
+									  .outY(cursorY),
+									  .clock(enMove));
 	assign outColour = colour;
+	assign LEDR [9:0] = {outX[4:0], outY[4:0]};
+	assign LEDR [14:11] = directions;
 endmodule
 
-module control(start, reset_N, clk, loadX, loadY, loadC, enable);
+module control(start, reset_N, clk, loadX, loadY, loadC, enMove, enPlot);//, LEDR);
 	input start, reset_N, clk;
-	output reg loadX, loadY, loadC, enable;
+	output reg loadX, loadY, loadC, enPlot, enMove;
+	//output [14:0] LEDR;
 
-	localparam SLOADX = 3'b000,
-			   SWAITX = 3'b001,
-			   SLOADY = 3'b011,
-			   SWAITY = 3'b010,
-			   SDRAW = 3'b110;
-	reg [2:0] state, next;
+	localparam WAIT = 4'b0000,
+				SLOADX = 4'b0010,
+			   SLOADY = 4'b0110,
+			   SDRAW = 4'b1100;
+	reg [3:0] state, next;
 
+	reg [18:0] enDraw;
+	/*assign LEDR[3:0] = state;
+	assign LEDR[4] = (enDraw == 19'd524_286);
+	assign LEDR[5] = ~reset_N;*/
 	always @(posedge clk)
 	begin
 		if (reset_N == 1'b0)
-			state <= SLOADX;
+			state <= WAIT;
 		else
 			state <= next;
 	end
@@ -210,26 +189,42 @@ module control(start, reset_N, clk, loadX, loadY, loadC, enable);
 	always @(*)
 	begin
 		case (state)
-			SLOADX: next <= SLOADY;
-			SLOADY: next <= start ? SDRAW : SLOADX;
-			SDRAW: next <= start ? SLOADX : SDRAW;	//Add a wait state
+			WAIT: next <= start ? SLOADX : WAIT;
+			SLOADX: next <= start ? SLOADY : WAIT;
+			SLOADY: next <= start ? SDRAW : WAIT;
+			SDRAW: next <= (enDraw < 19'b011) ? WAIT : SDRAW;	//Add a wait state
 		endcase 
 	end
 
-	always @(*)
+	always @(posedge clk)
 	begin
+		enMove <= 1'b0;
 		loadX <= 1'b0;
 		loadY <= 1'b0;
 		loadC <= 1'b1;
-		enable <= 1'b0;
+		enPlot <= 1'b0;
+		
 		case (state)
-			SLOADX: loadX <= 1'b1;
-			SLOADY: loadY <= 1'b1;
+			WAIT : begin
+				enMove <= 1'b1;
+				enDraw <= 19'd524_286;
+				end
+			SLOADX: 
+				begin
+				enDraw <= 19'd524_286;
+				loadX <= 1'b1;
+				end
+			SLOADY:
+				begin
+				enDraw <= 19'd524_286;
+				loadY <= 1'b1;
+				end
 			SDRAW: begin
 				loadX <= 1'b0;
 				loadY <= 1'b0;
 				loadC <= 1'b0;
-				enable <= 1'b1;
+				enPlot <= 1'b1;
+				enDraw <= enDraw - 19'b1;
 			end
 		endcase
 	end

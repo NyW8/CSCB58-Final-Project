@@ -1,6 +1,6 @@
 Flow report for paint
-Mon Mar  9 12:50:10 2020
-Quartus Prime Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
+Tue Mar 10 20:50:00 2020
+Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 
 
 ---------------------
@@ -21,40 +21,40 @@ Quartus Prime Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
 ----------------
 ; Legal Notice ;
 ----------------
-Copyright (C) 2019  Intel Corporation. All rights reserved.
+Copyright (C) 2016  Intel Corporation. All rights reserved.
 Your use of Intel Corporation's design tools, logic functions 
-and other software and tools, and any partner logic 
+and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
 (including device programming or simulation files), and any 
 associated documentation or information are expressly subject 
 to the terms and conditions of the Intel Program License 
 Subscription Agreement, the Intel Quartus Prime License Agreement,
-the Intel FPGA IP License Agreement, or other applicable license
-agreement, including, without limitation, that your use is for
-the sole purpose of programming logic devices manufactured by
-Intel and sold by Intel or its authorized distributors.  Please
-refer to the applicable agreement for further details, at
-https://fpgasoftware.intel.com/eula.
+the Intel MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Intel and sold by Intel or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
 
 
 
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Mon Mar  9 12:50:10 2020       ;
-; Quartus Prime Version              ; 19.1.0 Build 670 09/22/2019 SJ Lite Edition ;
+; Flow Status                        ; Successful - Tue Mar 10 20:50:00 2020       ;
+; Quartus Prime Version              ; 16.1.0 Build 196 10/24/2016 SJ Lite Edition ;
 ; Revision Name                      ; paint                                       ;
 ; Top-level Entity Name              ; paint                                       ;
 ; Family                             ; Cyclone IV E                                ;
 ; Device                             ; EP4CE115F29C7                               ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 311 / 114,480 ( < 1 % )                     ;
-;     Total combinational functions  ; 264 / 114,480 ( < 1 % )                     ;
-;     Dedicated logic registers      ; 125 / 114,480 ( < 1 % )                     ;
-; Total registers                    ; 125                                         ;
+; Total logic elements               ; 197 / 114,480 ( < 1 % )                     ;
+;     Total combinational functions  ; 191 / 114,480 ( < 1 % )                     ;
+;     Dedicated logic registers      ; 98 / 114,480 ( < 1 % )                      ;
+; Total registers                    ; 98                                          ;
 ; Total pins                         ; 76 / 529 ( 14 % )                           ;
 ; Total virtual pins                 ; 0                                           ;
-; Total memory bits                  ; 230,400 / 3,981,312 ( 6 % )                 ;
+; Total memory bits                  ; 57,600 / 3,981,312 ( 1 % )                  ;
 ; Embedded Multiplier 9-bit elements ; 0 / 532 ( 0 % )                             ;
 ; Total PLLs                         ; 1 / 4 ( 25 % )                              ;
 +------------------------------------+---------------------------------------------+
@@ -65,7 +65,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 03/09/2020 12:49:33 ;
+; Start date & time ; 03/10/2020 20:49:21 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; paint               ;
 +-------------------+---------------------+
@@ -76,7 +76,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
 ; Assignment Name                     ; Value                                  ; Default Value ; Entity Name ; Section Id                        ;
 +-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
-; COMPILER_SIGNATURE_ID               ; 251457865919721.158377257311947        ; --            ; --          ; --                                ;
+; COMPILER_SIGNATURE_ID               ; 268891676010927.158388776027589        ; --            ; --          ; --                                ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_timing           ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_boundary_scan    ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_signal_integrity ;
@@ -95,31 +95,31 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
 
 
-+--------------------------------------------------------------------------------------------------------------------------+
-; Flow Elapsed Time                                                                                                        ;
-+----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
-+----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:09     ; 1.0                     ; 1007 MB             ; 00:00:23                           ;
-; Fitter               ; 00:00:19     ; 1.0                     ; 1729 MB             ; 00:00:32                           ;
-; Assembler            ; 00:00:03     ; 1.0                     ; 846 MB              ; 00:00:03                           ;
-; Timing Analyzer      ; 00:00:02     ; 1.1                     ; 933 MB              ; 00:00:02                           ;
-; EDA Netlist Writer   ; 00:00:00     ; 1.0                     ; 1068 MB             ; 00:00:00                           ;
-; Total                ; 00:00:33     ; --                      ; --                  ; 00:01:00                           ;
-+----------------------+--------------+-------------------------+---------------------+------------------------------------+
++-------------------------------------------------------------------------------------------------------------------------------+
+; Flow Elapsed Time                                                                                                             ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Analysis & Synthesis      ; 00:00:12     ; 1.0                     ; 993 MB              ; 00:00:23                           ;
+; Fitter                    ; 00:00:16     ; 1.0                     ; 1413 MB             ; 00:00:21                           ;
+; Assembler                 ; 00:00:03     ; 1.0                     ; 829 MB              ; 00:00:03                           ;
+; TimeQuest Timing Analyzer ; 00:00:04     ; 1.0                     ; 938 MB              ; 00:00:02                           ;
+; EDA Netlist Writer        ; 00:00:00     ; 1.0                     ; 1054 MB             ; 00:00:00                           ;
+; Total                     ; 00:00:35     ; --                      ; --                  ; 00:00:49                           ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
-+----------------------------------------------------------------------------------------+
-; Flow OS Summary                                                                        ;
-+----------------------+------------------+----------------+------------+----------------+
-; Module Name          ; Machine Hostname ; OS Name        ; OS Version ; Processor type ;
-+----------------------+------------------+----------------+------------+----------------+
-; Analysis & Synthesis ; ThinkFast-P50    ; Ubuntu 18.04.4 ; 18         ; x86_64         ;
-; Fitter               ; ThinkFast-P50    ; Ubuntu 18.04.4 ; 18         ; x86_64         ;
-; Assembler            ; ThinkFast-P50    ; Ubuntu 18.04.4 ; 18         ; x86_64         ;
-; Timing Analyzer      ; ThinkFast-P50    ; Ubuntu 18.04.4 ; 18         ; x86_64         ;
-; EDA Netlist Writer   ; ThinkFast-P50    ; Ubuntu 18.04.4 ; 18         ; x86_64         ;
-+----------------------+------------------+----------------+------------+----------------+
++---------------------------------------------------------------------------------------------+
+; Flow OS Summary                                                                             ;
++---------------------------+------------------+----------------+------------+----------------+
+; Module Name               ; Machine Hostname ; OS Name        ; OS Version ; Processor type ;
++---------------------------+------------------+----------------+------------+----------------+
+; Analysis & Synthesis      ; iits-i308-13     ; Ubuntu 18.04.4 ; 18         ; x86_64         ;
+; Fitter                    ; iits-i308-13     ; Ubuntu 18.04.4 ; 18         ; x86_64         ;
+; Assembler                 ; iits-i308-13     ; Ubuntu 18.04.4 ; 18         ; x86_64         ;
+; TimeQuest Timing Analyzer ; iits-i308-13     ; Ubuntu 18.04.4 ; 18         ; x86_64         ;
+; EDA Netlist Writer        ; iits-i308-13     ; Ubuntu 18.04.4 ; 18         ; x86_64         ;
++---------------------------+------------------+----------------+------------+----------------+
 
 
 ------------

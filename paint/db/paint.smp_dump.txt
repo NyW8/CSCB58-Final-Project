@@ -1,6 +1,7 @@
 
 State Machine - |paint|control:c0|state
-Name state.SDRAW state.SLOADX state.SLOADY 
-state.SLOADX 0 0 0 
-state.SLOADY 0 1 1 
-state.SDRAW 1 1 0 
+Name state.SLOADY state.SLOADX state.WAIT state.SDRAW 
+state.WAIT 0 0 0 0 
+state.SLOADX 0 1 1 0 
+state.SLOADY 1 0 1 0 
+state.SDRAW 0 0 1 1 

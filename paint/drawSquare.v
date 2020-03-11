@@ -6,7 +6,7 @@ module drawSquare(S_X,
 					Out_X,
 					Out_Y,
 					Done,
-					clk, LEDR
+					clk
 					);
 
 	input clk, start;
@@ -14,14 +14,10 @@ module drawSquare(S_X,
 	input [7:0] X, Y;
 	output [7:0] Out_X, Out_Y;
 	output reg Done;
-	output [17:0] LEDR;
 	
 	reg [3:0] xCounter, yCounter;
 	reg [5:0] counter;
-	assign LEDR [5:0] = counter;
-	assign LEDR [6] = Done;
-	assign LEDR [7] = start;
-	assign LEDR [8] = !start;
+	
 	always@(posedge clk)
 	begin
 		if (!start || Done)
